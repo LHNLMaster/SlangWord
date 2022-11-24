@@ -481,8 +481,11 @@ public class SlangWord {
 	 
 	 public static void main(String[] args)
 	    {
-	        GetData();
-	        GetHistory();
-	        Menu();
+	        ReadFile("slangwordnew.txt");
+       		if (m.isEmpty()) {
+            		ReadFile("slang.txt");
+        	}
+		his = LoadHistory("history.txt");
+       		Menu();
 	    }
 }
