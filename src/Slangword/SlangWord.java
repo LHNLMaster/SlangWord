@@ -441,39 +441,40 @@ public class SlangWord {
 		 choose = sc.nextInt();
 		 switch(choose) {
 		 	case 1: 
-		 		SearchSlangWord();
+		 		searchSlangWord();
 		 		break;
 		 	case 2: 
-		 		SearchDefinition();
+		 		searchDefinition();
 		 		break;
 		 	case 3: 
-		 		ShowHistory();
+		 		showHistory();
 		 		break;
 		 	case 4: 
-		 		CreateSlangWord();
+		 		addSlangWord();
 		 		break;
 		 	case 5: 
-		 		EditSlangWord();
+		 		editSlangWord();
 		 		break;
 		 	case 6: 
-		 		RemoveSlangWord();
+		 		deleteSlangWord();
 		 		break;
 		 	case 7: 
-		 		ResetSlangDictionary();
+		 		resetSlangWord();
 		 		break;
-		 	case 8: RamdomSlangword();
+		 	case 8: 
+		 		randomSlangWord();
 		 		break;
 		 	case 9: 
-		 		GameOne();
+		 		gameOne();
 		 		break;
 		 	case 10:
-		 		GameTwo();
+		 		gameTwo();
 		 		break;
 		 	case 11:
 		 		clearScreen();
-	            updateFile();
-	            updateHistory();
-	            System.exit(0);
+		 		WriteHistory("history.txt");
+		 		WriteFile("slangwordnew.txt");
+		 		System.exit(0);
 		 }
 		 
 	}
