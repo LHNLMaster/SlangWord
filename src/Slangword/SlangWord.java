@@ -241,23 +241,21 @@ public class SlangWord {
         	PauseTest();
         	Menu();
 	    }
+	
+	public static String RandomKey() {
+        	Object[] Keys = m.keySet().toArray();
+        	return (String)Keys[new Random().nextInt(Keys.length)];
+    	}
 	 
 	 //8. Random 1 slang word
 	 public static String RamdomSlangword(){
 	        clearScreen();
-	        int count=0;
-	        Random rd=new Random();
-	        int magicNumber=rd.nextInt(m.size());
-	        String ans="";
-	        for (String i: m.keySet())
-	        {
-	            if (count==magicNumber)
-	            {
-	                ans=i;
-	                break;
-	            }else count++;
-	        }
-	        return ans;
+        	String random_key = RandomKey(); 
+        	System.out.println("Ramdom Slang word today:");
+        	System.out.print("- " + random_key + ": ");
+        	ShowDefinition(random_key);
+        	PauseTest();
+        	Menu();
 	    }
 	 
 	 //9. Game One
