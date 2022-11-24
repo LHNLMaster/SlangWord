@@ -14,64 +14,144 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 
 public class SlangWord {
-	public final static void clearScreen() {
-			System.out.print("");
-			System.out.flush();
-		}
+	public static HashMap<String, List<String>> m = new HashMap<String, List<String>>();
+    	public static ArrayList<String> his = new ArrayList<String>();
+    	public static Scanner sc = new Scanner(System.in);
 	
-	public static void pauseScreen(){
-		System.out.println("Press Any Key To Continue");
-		new java.util.Scanner(System.in).nextLine();
-	    }
+	public static void ReadFile(String file_name) {
+        	try {
+            		File f = new File(file_name);
+            		FileReader fr = new FileReader(f);
 
-	public static HashMap<String,List<String>> m = new HashMap<String,List<String>>();
-	public static List<String> historySlangWord = new ArrayList();
-	public static Scanner word = new Scanner(System.in);
+            		BufferedReader br = new BufferedReader(fr);
+            		String line;
+            		while ((line = br.readLine()) != null) {
+                	if (line.contains("`")) {
+                    		List<String> tar = new ArrayList<String>();	
+                    		String[] s = line.split("`");
+                    	if (s[1].contains("|")) {
+                        	String[] tmp = s[1].split("\\|");
+                        	for (int i = 0; i < tmp.length; i++) {
+                            		tmp[i] = tmp[i].trim();
+                        	}
+                       	 	tar = Arrays.asList(tmp);
+                    	}
+                    	else {
+                        	tar.add(s[1]);
+                    	}
+                    	m.put(s[0], tar);
+                	}
+            	}
+            	fr.close();
+            	br.close();
+        	}
+        	catch (Exception ex) {
+            		System.out.println("Error: "+ex);
+        	}
+    	}
+	
+	public static void ReadFileDuplicate(String file_name) {
+        	try {
+            		File f = new File(file_name);
+            		FileReader fr = new FileReader(f);
+            		BufferedReader br = new BufferedReader(fr);
+            		String line;
+            	while ((line = br.readLine()) != null) {
+                	if (line.contains("`")) {
+                    		List<String> tar = new ArrayList<String>();
+                    		String[] s = line.split("`");
+                    	if (m.containsKey(s[0])) {
+                        	tar = m.get(s[0]);
+                        	tar.add(s[1]);
+                    	}
+                    	else {
+                        	tar.add(s[1]);
+                    	}
+                    	m.put(s[0], tar);
+                	}
+            	}
+            	fr.close();
+            	br.close();
+        	}
+       		catch (Exception ex) {
+            		System.out.println("Error: "+ex);
+        	}
+    	}
+	
+	public static void WriteHistory(String file_name) {
+        	try {
+            		File f = new File(file_name);
+            		FileWriter fw = new FileWriter(f);
+            		BufferedWriter bw = new BufferedWriter(fw);
+            		for (String i : his) {
+                		fw.write(i + "\n");
+            		}
+            		fw.close();
+            		bw.close();
+       		 }
+        	catch (Exception ex) {
+            		System.out.println("Error: "+ex);
+        	}
+    	}
+	
+	public static ArrayList<String> LoadHistory (String file_name) {
+        	ArrayList<String> his = new ArrayList<String>();
+        	try {
+            		File f = new File(file_name);
+            		FileReader fr = new FileReader(f);
 
-	public static void GetHistory() {
-		try
-	     	{
-	        	File f=new File("./data/history.txt");
-	        	FileReader fr=new FileReader(f);
-	        	BufferedReader br=new BufferedReader(fr);
-	        	String line;
-	       	 	while((line=br.readLine())!=null) {
-	            		historySlangWord.add(line);
-	        	}
-	        	fr.close();
-	        	br.close();
-	    	}
-	    	catch (Exception ex)
-	    	{
-	        System.out.println("ERROR"+ex);
-	    }
-	    }
-
-	    public static void GetData(){
-	     try
-	     {
-	        File f=new File("./data/slang.txt");
-	        FileReader fr=new FileReader(f);
-	        BufferedReader br=new BufferedReader(fr);
-	        String line;
-	        while((line=br.readLine())!=null)
-	        {
-	            if (line.contains("`"))
-	            {
-	                String[] s = line.split("`");
-	                String[] tmp = s[1].split("\\|");
-	                List<String> temp=Arrays.asList(tmp);
-	                m.put(s[0],temp);
-	            }
-	        }
-	        fr.close();
-	        br.close();
-	    }
-	    catch (Exception ex)
-	    {
-	        System.out.println("ERROR"+ex);
-	    }
-	    }
+            		BufferedReader br = new BufferedReader(fr);
+            		String line;
+            		while ((line = br.readLine()) != null) {
+                		his.add(line);
+            		}
+            		fr.close();
+            		br.close();
+        	}
+		catch (Exception ex) {
+            		System.out.println("Error: "+ex);
+        	}
+        	return his;
+    	}
+	
+	public static void WriteFile(String file_name) {
+        	try {
+            		File f = new File(file_name);
+            		FileWriter fw = new FileWriter(f);
+            		for (String key : m.keySet()) {
+                	fw.write(key + "`");
+                	List<String> tmp = m.get(key);
+                	int i = 0;
+                	for (i = 0; i < tmp.size() - 1; i++) {
+                    		fw.write(tmp.get(i) + "| ");
+                	}
+                	fw.write(tmp.get(i) + "\n");
+            	}	
+            	fw.close();
+        	}
+        	catch (Exception ex) {
+            		System.out.println("Error:  "+ex);
+        	}
+    	}
+	
+	public static void ShowDefinition(String slang) {
+        	List<String> l = m.get(slang);
+        	for (String s: l) {
+            		System.out.print(s + ", ");
+        	}
+        	System.out.print("\b\b     \n");
+    	}
+	
+	public static void PauseTest(){
+        	System.out.println("Press Any Key To Continue");
+        	new java.util.Scanner(System.in).nextLine();
+    	}
+	
+	public final static void clearScreen() {  
+        	System.out.print("");  
+        	System.out.flush(); 
+    	}
+	
 	//1. Search SlangWord
 	 public static void searchSlangWord() {
 	        clearScreen();
@@ -318,50 +398,6 @@ public class SlangWord {
        	 	PauseTest();
         	Menu();
 	    }
-	 
-	 //Update Hstory
-	 public static void updateHistory(){
-	        try {
-	            File f = new File("./data/history.txt");
-	            FileWriter fw = new FileWriter(f);
-	            BufferedWriter bw = new BufferedWriter(fw);
-	            for (String temp : historySlangWord) {
-	                fw.write(temp + "\n");
-	            }
-	            fw.close();
-	            bw.close();
-	        }
-	        catch (Exception ex) {
-	            System.out.println("Error: "+ex);
-	        }
-	    }
-	 
-	//Update File
-	    public static void updateFile()
-	    {
-	        try {
-	            File f = new File("./data/slang.txt");
-	            FileWriter fw = new FileWriter(f);
-	            BufferedWriter bw = new BufferedWriter(fw);
-	            for (String i: m.keySet())
-	            {
-	                fw.write(i +"`");
-	                List<String> temp=m.get(i);
-	                for (int t=0;t<temp.size();t++)
-	                {
-	                    fw.write(temp.get(t));
-	                    if (t+1<temp.size()) fw.write("|");
-	                }
-	                fw.write("\n");
-	            }
-	            fw.close();
-	            bw.close();
-	        }
-	        catch (Exception ex) {
-	            System.out.println("Error: "+ex);
-	        }
-	    }
-
 
 	 public static void Menu () {
 			
