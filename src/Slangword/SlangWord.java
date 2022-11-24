@@ -14,37 +14,35 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 
 public class SlangWord {
-		public final static void clearScreen() {
+	public final static void clearScreen() {
 			System.out.print("");
 			System.out.flush();
 		}
 	
-		public static void pauseScreen(){
-			System.out.println("Press Any Key To Continue");
-	        new java.util.Scanner(System.in).nextLine();
+	public static void pauseScreen(){
+		System.out.println("Press Any Key To Continue");
+		new java.util.Scanner(System.in).nextLine();
 	    }
 
-		public static HashMap<String,List<String>> m = new HashMap<String,List<String>>();
-		public static List<String> historySlangWord = new ArrayList();
-		public static Scanner word = new Scanner(System.in);
+	public static HashMap<String,List<String>> m = new HashMap<String,List<String>>();
+	public static List<String> historySlangWord = new ArrayList();
+	public static Scanner word = new Scanner(System.in);
 
-		public static void GetHistory()
-	    {
-	        try
-	     {
-	        File f=new File("./data/history.txt");
-	        FileReader fr=new FileReader(f);
-	        BufferedReader br=new BufferedReader(fr);
-	        String line;
-	        while((line=br.readLine())!=null)
-	        {
-	            historySlangWord.add(line);
-	        }
-	        fr.close();
-	        br.close();
-	    }
-	    catch (Exception ex)
-	    {
+	public static void GetHistory() {
+		try
+	     	{
+	        	File f=new File("./data/history.txt");
+	        	FileReader fr=new FileReader(f);
+	        	BufferedReader br=new BufferedReader(fr);
+	        	String line;
+	       	 	while((line=br.readLine())!=null) {
+	            		historySlangWord.add(line);
+	        	}
+	        	fr.close();
+	        	br.close();
+	    	}
+	    	catch (Exception ex)
+	    	{
 	        System.out.println("ERROR"+ex);
 	    }
 	    }
@@ -75,143 +73,132 @@ public class SlangWord {
 	    }
 	    }
 	//1. Search SlangWord
-	 public static void SearchSlangWord()
-	    {
+	 public static void searchSlangWord() {
 	        clearScreen();
-	        System.out.print("What word you want to find: ");
-	        String check = word.nextLine();
-	        check=check.toUpperCase();
-	        List<String> test = m.get(check);
-	        historySlangWord.add(check);
-	        System.out.println(test);
-	        pauseScreen();
-	        Menu();
+        	System.out.print("Enter a Slang word: ");
+        	String key = sc.nextLine();
+        	his.add(key);
+        	key = key.toUpperCase();
+        	if (!m.containsKey(key)) {
+           	 	System.out.println("Not Found!!!");
+        	}
+        	else {
+            		List<String> l = m.get(key);
+            		System.out.print("Result:");
+            		for (String s: l) {
+                		System.out.println("- " + s);
+            		}
+        	}
+        	PauseTest();
+        	Menu();
 	    }
 	 
 	 //2. Search by definition
-	 public static void SearchDefinition()
-	    {
+	 public static void searchDefinition() {
 	        clearScreen();
-	        System.out.println("What definition you want to find: ");
-	        String check=word.nextLine();
-	        historySlangWord.add(check);
-	        List<String> answer = new ArrayList();
-	        for (String i: m.keySet())
-	        {
-	            if (m.get(i).contains(check))
-	            {
-	                answer.add(i);
-	            }
-	        }
-	        System.out.println(answer);
-	        pauseScreen();
-	        Menu();
-	    }
+        	ArrayList<String> slang_means = new ArrayList<String>();
+        	System.out.print("Enter any word to find a Slang word: ");
+        	String word = sc.nextLine();
+        	his.add(word);
+        	word = word.toLowerCase();
+        	for (String i : m.keySet()) {
+            		for (String s: m.get(i)) {
+                		if (s.toLowerCase().contains(word)) {
+                    			slang_means.add(i);
+                		}
+            		}
+		}
+        	if (!slang_means.isEmpty()) {
+            		System.out.println("Slang words found: ");
+            		for (String i : slang_means) {
+                		System.out.print("- " + i + ": ");
+                		ShowDefinition(i);
+            		}
+        	}
+        	else {
+            		System.out.println("Not Found!!!");
+        	}
+
+        	PauseTest();
+        	Menu();
+	 }
 	 
 	 //3. Show History
-	 public static void ShowHistory()
-	    {
+	 public static void showHistory() {
 	        clearScreen();
-	        System.out.println("Your history search is: ");
-	        for (String temp: historySlangWord)
-	        {
-	            System.out.println(temp);
-	        }
-	        pauseScreen();
-	        Menu();
+        	System.out.println("History:");
+        	for (String i : his) {
+            		System.out.println("- " + i);
+        	}
+        	PauseTest();
+       	 	Menu();
 	    }
+	
+	public static void AddSlang(String slang, String means) {
+            	ArrayList<String> tmp = new ArrayList<String>();
+            	tmp.add(means);
+            	m.put(slang.toUpperCase(), tmp);
+            	System.out.println("Add successfully!!!");
+   	 }
+	
+	public static void Duplicate(String slang, String means) {
+        	List<String> tmp = new ArrayList<String>();
+        	tmp = m.get(slang);
+        	tmp.add(means);
+        	m.put(slang.toUpperCase(), tmp);
+        	System.out.println("Add successfully!!!");
+    	}
 	 
 	 //4. Add new Slang word
-	 public static void CreateSlangWord()
-	    {
+	 public static void addSlangWord() {
 	        clearScreen();
-	        System.out.println("What is your new Slang Word: ");
-	        String check = word.nextLine();
-	        check=check.toUpperCase();
-	        System.out.println("What is the definition: ");
-	        String check1 = word.nextLine();
-	        List<String> t=new ArrayList();
-	        t.add(check1);
-	        if (m.containsKey(check))
-	        {
-	            System.out.println("Do you want to overwrite: ");
-	            String confirm =word.nextLine();
-	            if (confirm.equals("Y") || confirm.equals("y") ) m.put(check,t);
-	            else
-	            {
-	                List<String> i=m.get(check);
-	                for (String j:i)
-	                {
-	                    t.add(j);
-	                }
-	                m.put(check,t);
-	            }
-	        }
-	        else
-	        {
-	            m.put(check,t);
-	            System.out.println("Add New Slang Word Successfully");
-	        }
-	        Menu();
+        	System.out.print("Enter Slang word: ");
+        	String slang = sc.nextLine();
+        	System.out.print("Enter meanings: ");
+        	String means = sc.nextLine();      
+        	if (m.containsKey(slang)) {
+            		System.out.println("This Slang word was existed, Choose what you want to: ");
+            		System.out.println("1. Overwrite");
+            		System.out.println("2. Dupicate");
+            		int c = sc.nextInt();
+            		if (c == 1) {
+                		AddSlang(slang, means);
+            		}
+            		else if (c == 2) {
+                		Duplicate(slang, means);
+            		}
+        	}
+        	else {
+            		AddSlang(slang, means);
+        	}
+        	PauseTest();
+       		Menu();
 	    }
 	 
 	 //5. Edit 1 slang word
-	 public static void EditSlangWord(){
+	 public static void addSlangWord(){
 	        clearScreen();
-	        System.out.print("What slangword you want to edit: ");
-	        String check = word.nextLine();
-	        check=check.toUpperCase();
-	        if (!m.containsKey(check))
-	        {
-	            System.out.println("This slangword dont't exist");
-	            pauseScreen();
-	            Menu();
-	        }
-	        clearScreen();
-	        System.out.println("Here is the definition: " );
+        	System.out.print("Enter Slang word you want to edit: ");
+        	String slang = sc.nextLine();
+        	slang = slang.toUpperCase();
+        	if (!m.containsKey(slang)) {
+            		System.out.println("This Slang word does not exist!!");
+        	}
+       		else {
+            		System.out.print("Enter new Slang word: ");
+            	String new_slang = sc.nextLine();
+            	System.out.print("Enter new Meaning: ");
+            	String new_means = sc.nextLine();
+            	List<String> tmp = new ArrayList<String>();
+            	tmp.add(new_means);
+            	m.put(new_slang.toUpperCase(), tmp);
+            	m.remove(slang);
+            	System.out.println("Edit successfully!!");
+        	}
 
-	        List<String> showCase=m.get(check);
-	        List<String> rshowCase=new ArrayList();
-	        for (String i:showCase)
-	        {
-	            rshowCase.add(i);
-	        }
-	        int count=1;
-	        for (String i: showCase)
-	        {
-	            System.out.println(count+ "." + i);
-	            count++;
-	        }
-	        System.out.println("What word you want to change: ");
-	        int index = word.nextInt();
-	        clearScreen();
-	        System.out.println("What do you want: ");
-	        System.out.println("1. Replace Definition ");
-	        System.out.println("2. Delete Definition ");
-	        System.out.println("YOUR CHOICE:");
-	        int choice=word.nextInt();
-	        String pass=word.nextLine();
-	        if (choice==1) 
-	        {
-	            rshowCase.remove(index-1);
-	            System.out.print("What is the new definition : ");
-	            String temp=word.nextLine();
-	            rshowCase.add(temp);
-	            m.put(check,rshowCase);
-	        }
-	        else if (choice==2)
-	        {
-	            if (rshowCase.size()==1) 
-	            {
-	                System.out.println("You can't delete this ");
-	                pauseScreen();
-	                Menu();
-	            }
-	            rshowCase.remove(index-1);
-	            m.put(check,rshowCase);
-	        }
-	        Menu();
-	    }
+        	PauseTest();
+       	 	Menu();
+	  }
 	 
 	 //6. Delete 1 slang word
 	 public static void RemoveSlangWord()
