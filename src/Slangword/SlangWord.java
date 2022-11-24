@@ -226,36 +226,20 @@ public class SlangWord {
 	    }
 	 
 	 //7. Reset the original slang words list
-	 public static void ResetSlangDictionary()
+	 public static void resetSlangWord()
 	    {
 	        clearScreen();
-	        m.clear();
-	        try
-	     {
-	        File f=new File("./data/slangwordnew.txt");
-	        FileReader fr=new FileReader(f);
-	        BufferedReader br=new BufferedReader(fr);
-	        String line;
-	        while((line=br.readLine())!=null)
-	        {
-	            if (line.contains("`"))
-	            {
-	                String[] s=line.split("`");
-	                String[] tmp=s[1].split("\\|");
-	                List<String> temp=Arrays.asList(tmp);
-	                m.put(s[0],temp);
-	            }
-	        }
-	        fr.close();
-	        br.close();
-	    }
-	    catch (Exception ex)
-	    {
-	        System.out.println("ERROR"+ex);
-	    }
-	        System.out.println("Reset List To Default !!!");
-	        pauseScreen();
-	        Menu();
+        	m.clear();;
+        	if (m.isEmpty()) {
+           		ReadFile("slang.txt");
+            		System.out.println("Reset successfully!!");
+        	}
+        	else {
+            		System.out.println("Reset Fail!!");
+        	}
+
+        	PauseTest();
+        	Menu();
 	    }
 	 
 	 //8. Random 1 slang word
