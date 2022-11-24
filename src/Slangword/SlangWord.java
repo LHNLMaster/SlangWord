@@ -186,14 +186,14 @@ public class SlangWord {
         	}
        		else {
             		System.out.print("Enter new Slang word: ");
-            	String new_slang = sc.nextLine();
-            	System.out.print("Enter new Meaning: ");
-            	String new_means = sc.nextLine();
-            	List<String> tmp = new ArrayList<String>();
-            	tmp.add(new_means);
-            	m.put(new_slang.toUpperCase(), tmp);
-            	m.remove(slang);
-            	System.out.println("Edit successfully!!");
+            		String new_slang = sc.nextLine();
+            		System.out.print("Enter new Meaning: ");
+            		String new_means = sc.nextLine();
+            		List<String> tmp = new ArrayList<String>();
+            		tmp.add(new_means);
+            		m.put(new_slang.toUpperCase(), tmp);
+            		m.remove(slang);
+            		System.out.println("Edit successfully!!");
         	}
 
         	PauseTest();
