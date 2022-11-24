@@ -201,18 +201,28 @@ public class SlangWord {
 	  }
 	 
 	 //6. Delete 1 slang word
-	 public static void RemoveSlangWord()
+	 public static void deleteSlangWord()
 	    {
 	        clearScreen();
-	        System.out.println("What slangword you want to remove: ");
-	        String check=word.nextLine();
-	        if (m.containsKey(check))
-	        {
-	            System.out.println("Are you sure you want to remove it: ");
-	            String confirm=word.nextLine();
-	            if (confirm.equals("Y") || confirm.equals("y") ) m.remove(check);
-	        }
-	        Menu();
+        	System.out.print("Enter Slang word you want to delete: ");
+        	String slang = sc.nextLine();
+        	slang = slang.toUpperCase();
+        	if (!m.containsKey(slang)) {
+            		System.out.println("This Slang word does not exist!!");
+        	}
+        	else {
+            		System.out.println("Comfirm delete (y/n)? ");
+            		String choice = sc.next();
+            		if (choice.equals("y") || choice.equals("Y")) {
+                		m.remove(slang);
+                		System.out.println("Delete successfully!!");
+            		}
+            		else {
+                		System.out.println("Not delete!!");
+            		}
+        	}
+        	PauseTest();
+        	Menu();
 	    }
 	 
 	 //7. Reset the original slang words list
