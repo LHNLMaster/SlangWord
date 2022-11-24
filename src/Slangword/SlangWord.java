@@ -259,100 +259,64 @@ public class SlangWord {
 	    }
 	 
 	 //9. Game One
-	 public static void GameOne()
-	    {
-	        clearScreen();
-	        Random rand = new Random();
-	        List<String> poll=new ArrayList();
-
-	        String word1 = RamdomSlangword();
-	        String qword=word1;
-	        List<String> w1=m.get(word1);
-	        word1=w1.get(rand.nextInt(w1.size()));
-	        String win=word1;
-	        poll.add(word1);
-
-	        String word2 = RamdomSlangword();
-	        List<String> w2=m.get(word2);
-	        word2=w2.get(rand.nextInt(w2.size()));
-	        poll.add(word2);
-
-	        String word3 = RamdomSlangword();
-	        List<String> w3=m.get(word3);
-	        word3=w3.get(rand.nextInt(w3.size()));
-	        poll.add(word3);
-
-	        String word4 = RamdomSlangword();
-	        List<String> w4=m.get(word4);
-	        word4=w4.get(rand.nextInt(w4.size()));
-	        poll.add(word4);
-
-
-	        System.out.println("Question: What is the Definition for " + qword);
-
-	        word1=poll.get(rand.nextInt(poll.size()));
-	        poll.remove(word1);
-	        System.out.println("A.  " + word1);
-	        word2=poll.get(rand.nextInt(poll.size()));
-	        poll.remove(word2);
-	        System.out.println("B.  " + word2);
-	        word3=poll.get(rand.nextInt(poll.size()));
-	        poll.remove(word3);
-	        System.out.println("C.  " + word3);
-	        word4=poll.get(rand.nextInt(poll.size()));
-	        poll.remove(word4);
-	        System.out.println("D.  " + word4);
-
-	        System.out.println("Your Answer is: ");
-	        String choice=word.nextLine();
-
-	        if ( (choice.equals("A") || choice.equals("a")) && word1==win) System.out.println("Congratulations , Your Answer is correct");
-	        else if ((choice.equals("B") || choice.equals("b")) && word2==win) System.out.println("Congratulations , Your Answer is correct");
-	        else if ((choice.equals("C") || choice.equals("c")) && word3==win) System.out.println("Congratulations , Your Answer is correct");
-	        else if ((choice.equals("D") || choice.equals("d")) && word4==win) System.out.println("Congratulations , Your Answer is correct");
-	        else System.out.println("Sorry , Your Answer is incorrect . The Answer is " + win);
-	        pauseScreen();
-	        Menu();
+	 public static void gameOne() {	        
+        	clearScreen();
+        	Random r = new Random();
+        	List<String> choice = new ArrayList<String>();
+        	for(int i = 0; i < 4; i++) {
+            		String word = RandomKey();
+            		choice.add(word);
+        	}
+        	String ans_key = choice.get(r.nextInt(choice.size()));
+        	System.out.println(">> Slang word: " + ans_key);
+        	System.out.println(">> What is the definition of the above Slang word? Choose your answer (1-4)");
+        	int index = 1;
+        	for (String i : choice) {
+            		System.out.print(index + ". ");
+            		ShowDefinition(i);
+            		index++;
+        	}
+        	System.out.print(">>> Your answer: ");
+        	int input = sc.nextInt();
+        	if (choice.get(input - 1).equals(ans_key)){
+            		System.out.println(">>> Congratulation! You won the game!!!");
+        	}
+        	else {
+            		System.out.println(">>> You losed the game!!!");
+        	}
+        	PauseTest();
+        	Menu();
 	    }
 	 
 	 //10. Game Two
-	 public static void GameTwo()
+	 public static void gameTwo()
 	    {
 	        clearScreen();
-	        Random rand = new Random();
-	        List<String> poll=new ArrayList();
-	        String word1 = RamdomSlangword();
-	        poll.add(word1);
-	        String word2 = RamdomSlangword();
-	        poll.add(word2);
-	        String word3 = RamdomSlangword();
-	        poll.add(word3);
-	        String word4 = RamdomSlangword();
-	        poll.add(word4);
-	        List<String> qword=m.get(word1);
-	        String win=word1;
-	        System.out.println("Question: What is the Slang Word for " + qword.get(rand.nextInt(qword.size())));
-	        word1=poll.get(rand.nextInt(poll.size()));
-	        poll.remove(word1);
-	        System.out.println("A.  " + word1);
-	        word2=poll.get(rand.nextInt(poll.size()));
-	        poll.remove(word2);
-	        System.out.println("B.  " + word2);
-	        word3=poll.get(rand.nextInt(poll.size()));
-	        poll.remove(word3);
-	        System.out.println("C.  " + word3);
-	        word4=poll.get(rand.nextInt(poll.size()));
-	        poll.remove(word4);
-	        System.out.println("D.  " + word4);
-	        System.out.println("Your Answer is: ");
-	        String choice=word.nextLine();
-	        if ( (choice.equals("A") || choice.equals("a")) && word1==win) System.out.println("Congratulations , Your Answer is correct");
-	        else if ((choice.equals("B") || choice.equals("b")) && word2==win) System.out.println("Congratulations , Your Answer is correct");
-	        else if ((choice.equals("C") || choice.equals("c")) && word3==win) System.out.println("Congratulations , Your Answer is correct");
-	        else if ((choice.equals("D") || choice.equals("d")) && word4==win) System.out.println("Congratulations , Your Answer is correct");
-	        else System.out.println("Sorry , Your Answer is incorrect . The Answer is " + win);
-	        pauseScreen();
-	        Menu();
+        	Random r = new Random();
+        	List<String> choice = new ArrayList<String>();
+        	for(int i = 0; i < 4; i++) {
+            		String word = RandomKey();
+            		choice.add(word);
+        	}
+        	String ans_key = choice.get(r.nextInt(choice.size()));
+        	System.out.println(">> Definition:");
+        	ShowDefinition(ans_key);
+        	System.out.println(">> What is the Slang word of the above definition? Choose your answer (1-4)");
+        	int index = 1;
+        	for (String i : choice) {
+            		System.out.println(index + ". " + i);
+            		index++;
+        	}
+        	System.out.print(">>> Your answer: ");
+        	int input = sc.nextInt();
+        	if (choice.get(input - 1).equals(ans_key)){
+            		System.out.println(">>> Congratulation! You won the game!!!");
+        	}
+        	else {
+            		System.out.println(">>> You losed the game!!!");
+        	}
+       	 	PauseTest();
+        	Menu();
 	    }
 	 
 	 //Update Hstory
